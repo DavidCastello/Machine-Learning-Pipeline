@@ -1,12 +1,11 @@
 ## CONFIGURACIÓN INICIAL DEL ENTORNO
 
-import random
 import os.path
+import random
 
 # ************ SPARK & SQL ********************
 
 import findspark
-findspark.init()
 import pyspark
 from pyspark.sql import SQLContext
 from pyspark.sql.types import *
@@ -29,10 +28,10 @@ from pyspark.ml.evaluation import RegressionEvaluator
 from matplotlib import pyplot as plt
 import pandas as pd
 
-
+findspark.init()
 sc = pyspark.SparkContext(master="local", appName="myApp")
 
-# Cargamos el archivo csv original
+## Cargamos el archivo csv original
 
 path_rawFile = "user/data/table.csv" # path a nuestro fichero en HDFS
 
@@ -40,6 +39,7 @@ data = sc.textFile(path_rawFile) # creamos elemento RDD a partir del fichero csv
 
 ## Formato del ejemplo utilizado:
 
+print("\nFormato de los datos originales cargados:\n")
 print (data.take(5))
 
 ## Definición del DataFrame
@@ -50,7 +50,7 @@ powerPlantDF = sqlContext.read.format("csv").options(delimiter=',',header='true'
 
 # Exploramos los datos
 
-print("Data types de los datos cargados:\n")
+print("\nData types de los datos cargados:\n")
 print(powerPlantDF.dtypes)
 print("\nVisualización de la tabla:\n")
 powerPlantDF.show()
